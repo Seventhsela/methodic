@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-ADMIN_ID = 620461478
+ADMIN_ID = 829329480
 
 
 bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
@@ -112,4 +112,5 @@ if __name__ == "__main__":
     try:
          asyncio.run(main())
     except KeyboardInterrupt:
+
         print("Bot is disconnect!")
