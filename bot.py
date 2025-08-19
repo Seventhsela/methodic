@@ -70,6 +70,14 @@ async def check_handler(message: types.Message):
     await message.answer("Чек отправлен администратору. Ожидайте подтверждения.")
 
 
+    await bot.send_document(
+        chat_id=ADMIN_ID,
+        document=message.document[-1].file_id,
+        caption=f"🧾 Чек (PDF) от @{username} (ID: {user_id})", reply_markup=keyboard)
+
+    await message.answer("Чек (PDF) отправлен администратору. Ожидайте подтверждения.")
+
+
 @dp.callback_query(F.data.startswith("approve:"))
 async def approve_callback(callback: types.CallbackQuery):
     user_id = int(callback.data.split(":")[1])
@@ -109,4 +117,5 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
 
         print("Bot is disconnect!")
+
 
