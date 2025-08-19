@@ -42,7 +42,7 @@ async def pay(callback: types.CallbackQuery):
                                   "После оплаты отправьте, пожалуйста, документ чека в этот чат для подтверждения."
                                   "После проверки вам будет выдано пособие в PDF-формате.")
 
-@dp.message(F.photo | F.document)
+@dp.message(F.photo)
 async def check_handler(message: types.Message):
     user = message.from_user
     user_id = user.id
@@ -65,7 +65,9 @@ async def check_handler(message: types.Message):
     await bot.send_photo(
     chat_id=ADMIN_ID,
     photo=message.photo[-1].file_id,
-    caption=f"🧾 Чек от @{username} (ID: {user_id})", reply_markup=keyboard)
+    caption=f"🧾 Чек от @{username} (ID: {user_id})",
+    reply_markup=keyboard
+    )
 
     await message.answer("Чек отправлен администратору. Ожидайте подтверждения.")
 
@@ -88,7 +90,7 @@ async def check_document_handler(message: types.Message):
     await bot.send_document(
         chat_id=ADMIN_ID,
         document=message.document.file_id,
-        caption=f"🧾 Чек (PDF) от @{username} (ID: {user_id}, reply_markup=keyboard)",
+        caption=f"🧾 Чек (PDF) от @{username} (ID: {user_id})",
         reply_markup=keyboard
     )
 
@@ -134,6 +136,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
 
         print("Bot is disconnect!")
+
 
 
 
