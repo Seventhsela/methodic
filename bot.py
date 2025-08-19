@@ -70,10 +70,27 @@ async def check_handler(message: types.Message):
     await message.answer("Чек отправлен администратору. Ожидайте подтверждения.")
 
 
+@dp.message(F.document)
+async def check_document_handler(message: types.Message):
+    user = message.from_user
+    user_id = user.id
+    username = user.username or "без ника"
+
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text="✅ Одобрить", callback_data=f"approve:{user_id}"),
+                InlineKeyboardButton(text="❌ Отклонить", callback_data=f"decline:{user_id}")
+            ]
+        ]
+    )
+
     await bot.send_document(
         chat_id=ADMIN_ID,
-        document=message.document[-1].file_id,
-        caption=f"🧾 Чек (PDF) от @{username} (ID: {user_id})", reply_markup=keyboard)
+        document=message.document.file_id,
+        caption=f"🧾 Чек (PDF) от @{username} (ID: {user_id}, reply_markup=keyboard)",
+        reply_markup=keyboard
+    )
 
     await message.answer("Чек (PDF) отправлен администратору. Ожидайте подтверждения.")
 
@@ -117,6 +134,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
 
         print("Bot is disconnect!")
+
 
 
 
