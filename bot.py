@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-ADMIN_ID = 829329480
+ADMIN_ID = 620461478
 
 
 bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
@@ -35,10 +35,10 @@ async def start(message: types.Message):
 
 @dp.callback_query(F.data == "pay")
 async def pay(callback: types.CallbackQuery):
-    await callback.message.edit_text("🧾 Оплата краткого пособия для мам\n\n"
-                                  "Стоимость: 2 500 ₸\n\n"
+    await callback.message.edit_text("🧾 Оплата \n\n"
+                                  "Стоимость: 1 000 ₸\n\n"
                                   "Для получения пособия, пожалуйста, произведите оплату по следующим реквизитам:\n"
-                                  "Kaspi Gold:💳 4400430311951799\n\n"
+                                  "Kaspi Gold:💳 4400430259725502\n\n"
                                   "После оплаты отправьте, пожалуйста, документ чека в этот чат для подтверждения."
                                   "После проверки вам будет выдано пособие в PDF-формате.")
 
@@ -105,7 +105,7 @@ async def approve_callback(callback: types.CallbackQuery):
     await callback.message.edit_caption(callback.message.caption + "\n\n✅ Оплата подтверждена")
 
     
-    file_path="краткое пособие для мам малышей.pdf"
+    file_path="гайд по детским состояниям.pdf"
     document = types.FSInputFile(file_path)
 
     await bot.send_document(
@@ -136,7 +136,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
 
         print("Bot is disconnect!")
-
 
 
 
