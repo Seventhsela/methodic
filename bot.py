@@ -4,6 +4,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.filters import Command
+from aiogram.client.bot import DefaultBotProperties
 import os
 from dotenv import load_dotenv
 
@@ -12,10 +13,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = 620461478
 
 
-bot = Bot(
-    token=BOT_TOKEN,
-    parse_mode=ParseMode.HTML
-)
+bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 dp = Dispatcher(storage=MemoryStorage())
 
 payment_keyboard = InlineKeyboardMarkup(
