@@ -104,7 +104,7 @@ async def approve_callback(callback: types.CallbackQuery):
 
         await callback.answer("Одобрено ✅")
 
-        file_path = "гайд по детским состояниям.pdf"
+        file_path = os.path.join(BASE_DIR, "guide.pdf")
 
         document = types.FSInputFile(file_path)
 
