@@ -4,7 +4,6 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.filters import Command
-from aiogram.client.bot import DefaultBotProperties
 import os
 from dotenv import load_dotenv
 
@@ -13,7 +12,10 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = 620461478
 
 
-bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+bot = Bot(
+    token=BOT_TOKEN,
+    parse_mode=ParseMode.HTML
+)
 dp = Dispatcher(storage=MemoryStorage())
 
 payment_keyboard = InlineKeyboardMarkup(
@@ -99,20 +101,34 @@ async def check_document_handler(message: types.Message):
 
 @dp.callback_query(F.data.startswith("approve:"))
 async def approve_callback(callback: types.CallbackQuery):
-    user_id = int(callback.data.split(":")[1])
+    try:
+        user_id = int(callback.data.split(":")[1])
 
-    await callback.answer("Одобрено ✅")
+        await callback.answer("Одобрено ✅")
+        await callback.message.answer("✅ Оплата подтверждена")
 
-    await callback.message.answer("✅ Оплата подтверждена")
+        import os
 
-    file_path = "гайд по детским состояниям.pdf"
-    document = types.FSInputFile(file_path)
+        file_path = os.path.join(
+            os.path.dirname(__file__),
+            "гайд по детским состояниям.pdf"
+        )
 
-    await bot.send_document(
-        chat_id=user_id,
-        document=document,
-        caption="Спасибо за оплату! Вот ваш файл 📄"
-    )
+        print("Путь:", file_path)
+        print("Файл существует:", os.path.exists(file_path))
+
+        document = types.FSInputFile(file_path)
+
+        await bot.send_document(
+            chat_id=user_id,
+            document=document,
+            caption="Спасибо за оплату! Вот ваш файл 📄"
+        )
+
+        print("Файл успешно отправлен")
+
+    except Exception as e:
+        print("ОШИБКА:", e)
 
 
 @dp.callback_query(F.data.startswith("decline:"))
