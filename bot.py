@@ -9,9 +9,8 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-ADMIN_ID = int(os.getenv("ADMIN_ID"))
+ADMIN_ID = 620461478
 
 
 bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
@@ -101,12 +100,12 @@ async def check_document_handler(message: types.Message):
 @dp.callback_query(F.data.startswith("approve:"))
 async def approve_callback(callback: types.CallbackQuery):
     user_id = int(callback.data.split(":")[1])
+
     await callback.answer("Одобрено ✅")
 
-    await callback.message.edit_caption(callback.message.caption + "\n\n✅ Оплата подтверждена")
+    await callback.message.answer("✅ Оплата подтверждена")
 
-    
-    file_path="гайд по детским состояниям.pdf"
+    file_path = "гайд по детским состояниям.pdf"
     document = types.FSInputFile(file_path)
 
     await bot.send_document(
@@ -119,9 +118,10 @@ async def approve_callback(callback: types.CallbackQuery):
 @dp.callback_query(F.data.startswith("decline:"))
 async def decline_callback(callback: types.CallbackQuery):
     user_id = int(callback.data.split(":")[1])
+
     await callback.answer("Отклонено ❌")
 
-    await callback.message.edit_caption(callback.message.caption + "\n\n❌ Оплата не подтверждена")
+    await callback.message.answer("❌ Оплата не подтверждена")
 
     await bot.send_message(
         chat_id=user_id,
