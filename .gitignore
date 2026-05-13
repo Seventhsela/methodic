@@ -1,7 +1,2 @@
 .env
 config.py
-*.pdf
-files/
-file.pdf
-__pycache__/
-*.pyc
