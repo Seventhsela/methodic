@@ -103,17 +103,8 @@ async def approve_callback(callback: types.CallbackQuery):
         user_id = int(callback.data.split(":")[1])
 
         await callback.answer("Одобрено ✅")
-        await callback.message.answer("✅ Оплата подтверждена")
 
-        import os
-
-        file_path = os.path.join(
-            os.path.dirname(__file__),
-            "гайд по детским состояниям.pdf"
-        )
-
-        print("Путь:", file_path)
-        print("Файл существует:", os.path.exists(file_path))
+        file_path = "гайд по детским состояниям.pdf"
 
         document = types.FSInputFile(file_path)
 
@@ -123,11 +114,11 @@ async def approve_callback(callback: types.CallbackQuery):
             caption="Спасибо за оплату! Вот ваш файл 📄"
         )
 
-        print("Файл успешно отправлен")
+        await callback.message.answer("✅ Файл успешно отправлен пользователю")
 
     except Exception as e:
-        print("ОШИБКА:", e)
-
+        await callback.message.answer(f"❌ Ошибка: {e}")
+        print(e)
 
 @dp.callback_query(F.data.startswith("decline:"))
 async def decline_callback(callback: types.CallbackQuery):
