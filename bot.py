@@ -29,7 +29,7 @@ async def start(message: types.Message):
          "<b>Привет!</b>\n\n"
         "Я знаю, как иногда бывает непросто, и именно поэтому создала это пособие.\n"
         "Через этот бот ты сможешь получить его в пару кликов и пусть оно станет твоей опорой в важных моментах.\n\n"
-        "💸 Стоимость — *1000 тг*\n"
+        "💸 Стоимость — *999 тг*\n"
         "📩 По всем вопросам — пиши мне @Indira120297!",
         parse_mode=ParseMode.HTML, reply_markup=payment_keyboard
     )
@@ -37,7 +37,7 @@ async def start(message: types.Message):
 @dp.callback_query(F.data == "pay")
 async def pay(callback: types.CallbackQuery):
     await callback.message.edit_text("🧾 Оплата \n\n"
-                                  "Стоимость: 1 000 ₸\n\n"
+                                  "Стоимость: 999 ₸\n\n"
                                   "Для получения пособия, пожалуйста, произведите оплату по следующим реквизитам:\n"
                                   "Kaspi Gold:💳 4400430259725502\n\n"
                                   "После оплаты отправьте, пожалуйста, документ чека в этот чат для подтверждения."
